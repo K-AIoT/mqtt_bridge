@@ -17,8 +17,18 @@
         <remap from="/pub_mag" to="/mag/mag_raw"/>
     </node>
     
-    <include file="$(find yahboomcar_ctrl)/launch/yahboom_joy.launch"/>
+    <!-- Publish odometer data -->
+    <node pkg="yahboomcar_bringup" type="base_node" name="odometry_publisher">
+        <param name="odom_frame" type="string" value="odom"/>
+        <param name="base_footprint_frame" type="string" value="base_footprint"/>
+        <param name="linear_scale_x" type="double" value="1.1"/>
+        <param name="linear_scale_y" type="double" value="0.95"/>
+        <remap from="/sub_vel" to="/vel_raw"/>
+        <remap from="/pub_odom" to="/odom_raw"/>
+    </node>
 
+    <include file="$(find yahboomcar_ctrl)/launch/yahboom_joy.launch"/>
+    
     <!-- MQTT Bridge node -->
     <node name="mqtt_bridge" pkg="mqtt_bridge" type="mqtt_bridge_node.py" output="screen">
         <rosparam file="$(find mqtt_bridge)/config/bridge_config.yaml" command="load"/>
