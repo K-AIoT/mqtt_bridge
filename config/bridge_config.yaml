@@ -9,7 +9,18 @@ mqtt:
        
 
 bridge:
-# TOPIC: BUZZER - Tpye std_msgs/Bool
+# TOPIC: move_base_simple/goal - TYPE: geometry_msgs/PoseStamped
+- factory: mqtt_bridge.bridge:RosToMqttBridge 
+  msg_type: geometry_msgs.msg:PoseStamped
+  topic_from: /move_base_simple/goal
+  topic_to: ~/MoveBaseSimple/Goal
+- factory: mqtt_bridge.bridge:MqttToRosBridge
+  msg_type: geometry_msgs.msg:PoseStamped
+  topic_from: ~/MoveBaseSimple/Goal
+  topic_to: /move_base_simple/goal
+
+
+# TOPIC: /Buzzer - TYPE: std_msgs/Bool
 - factory: mqtt_bridge.bridge:RosToMqttBridge 
   msg_type: std_msgs.msg:Bool
   topic_from: /Buzzer
