@@ -8,6 +8,16 @@ mqtt:
  private_path: robot
        
 bridge:
+bridge:
+#Twist data Communication
+- factory: mqtt_bridge.bridge:RosToMqttBridge
+  msg_type: geometry_msgs.msg:Twist
+  topic_from: /cmd_vel
+  topic_to: ~/cmd_vel 
+- factory: mqtt_bridge.bridge:MqttToRosBridge
+  msg_type: geometry_msgs.msg:Twist
+  topic_from: ~/cmd_vel 
+  topic_to: /cmd_vel
 #Float data Communication
 - factory: mqtt_bridge.bridge:RosToMqttBridge
   msg_type: std_msgs.msg:Float32
