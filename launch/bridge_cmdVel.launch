@@ -1,0 +1,36 @@
+<launch>
+    <arg name="use_gui" default="false"/>
+    <arg name="use_rviz" default="false"/>
+    <arg name="robot_type" value="$(env ROBOT_TYPE)" doc="robot_type [X1,X3,X3plus,R2,X7]"/>
+
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find yahboomcar_description)/urdf/yahboomcar_$(arg robot_type).urdf'"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+    <!-- Driver node -->
+    <node pkg="yahboomcar_bringup" type="Mcnamu_X3plus.py" name="driver_node" required="true" output="screen" if="$(eval arg('robot_type') == 'X3plus')">
+        <param name="xlinear_speed_limit" type="double" value="0.7"/>
+        <param name="ylinear_speed_limit" type="double" value="0.7"/>
+        <param name="angular_speed_limit" type="double" value="3.2"/>
+        <param name="imu_link" type="string" value="imu_link"/>
+        <remap from="/pub_vel" to="/vel_raw"/>
+        <remap from="/pub_imu" to="/imu/imu_raw"/>
+        <remap from="/pub_mag" to="/mag/mag_raw"/>
+    </node>
+    
+    <!-- Publish odometer data -->
+    <node pkg="yahboomcar_bringup" type="base_node" name="odometry_publisher">
+        <param name="odom_frame" type="string" value="odom"/>
+        <param name="base_footprint_frame" type="string" value="base_footprint"/>
+        <param name="linear_scale_x" type="double" value="1.1"/>
+        <param name="linear_scale_y" type="double" value="0.95"/>
+        <remap from="/sub_vel" to="/vel_raw"/>
+        <remap from="/pub_odom" to="/odom_raw"/>
+    </node>
+
+    <include file="$(find yahboomcar_ctrl)/launch/yahboom_joy.launch"/>
+    
+    <!-- MQTT Bridge node -->
+    <node name="mqtt_bridge" pkg="mqtt_bridge" type="mqtt_bridge_node.py" output="screen">
+        <rosparam file="$(find mqtt_bridge)/config/bridge_config.yaml" command="load"/>
+    </node>
+</launch>
