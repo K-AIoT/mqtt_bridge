@@ -20,12 +20,14 @@
   <build_depend>roscpp</build_depend>
   <build_depend>rosmsg</build_depend>
   <build_depend>rospy</build_depend>
+  <build_depend>world_canvas_msgs</build_depend>
 
   <build_export_depend>geometry_msgs</build_export_depend>
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>rosmsg</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
   
+  <exec_depend>world_canvas_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>message_runtime</exec_depend>
   <exec_depend>rospy</exec_depend>
