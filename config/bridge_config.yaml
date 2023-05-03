@@ -13,21 +13,20 @@ bridge:
 - factory: mqtt_bridge.bridge:RosToMqttBridge 
   msg_type: geometry_msgs.msg:PoseStamped
   topic_from: /move_base_simple/goal
-  topic_to: ~/MoveBaseSimple/Goal
+  topic_to: ~/toGoal
 - factory: mqtt_bridge.bridge:MqttToRosBridge
   msg_type: geometry_msgs.msg:PoseStamped
-  topic_from: ~/MoveBaseSimple/Goal
+  topic_from: ~/fromGoal
   topic_to: /move_base_simple/goal
-
 
 # TOPIC: /Buzzer - TYPE: std_msgs/Bool
 - factory: mqtt_bridge.bridge:RosToMqttBridge 
   msg_type: std_msgs.msg:Bool
   topic_from: /Buzzer
-  topic_to: ~/buzzer 
+  topic_to: ~/toBuzzer 
 - factory: mqtt_bridge.bridge:MqttToRosBridge
   msg_type: std_msgs.msg:Bool
-  topic_from: ~/buzzer
+  topic_from: ~/fromBuzzer
   topic_to: /Buzzer
 
 # TOPIC: /cmd_vel - TYPE: geometry_msgs/Twist
@@ -44,10 +43,10 @@ bridge:
 - factory: mqtt_bridge.bridge:RosToMqttBridge
   msg_type: geometry_msgs.msg:Twist
   topic_from: /vel_raw
-  topic_to: ~/velRaw
+  topic_to: ~/toVelRaw
 - factory: mqtt_bridge.bridge:MqttToRosBridge
   msg_type: geometry_msgs.msg:Twist
-  topic_from: ~/velRaw 
+  topic_from: ~/fromVelRaw 
   topic_to: /vel_raw
 
 ##################################################
