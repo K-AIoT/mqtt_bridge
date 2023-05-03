@@ -1,9 +1,0 @@
-<launch>
-    <node pkg="rviz" type="rviz" name="rviz" required="true"
-          args="-d $(find yahboomcar_nav)/rviz/yahboomcar_navigate.rviz"/>
-
-    <!-- MQTT Bridge node -->
-    <node name="mqtt_bridge" pkg="mqtt_bridge" type="mqtt_bridge_node.py" output="screen">
-        <rosparam file="$(find mqtt_bridge)/config/bridge_config.yaml" command="load"/>
-    </node>
-</launch>

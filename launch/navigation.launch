@@ -1,0 +1,24 @@
+<launch>
+    <!-- MQTT Bridge node -->
+    <node name="mqtt_bridge" pkg="mqtt_bridge" type="mqtt_bridge_node.py" output="screen">
+        <rosparam file="$(find mqtt_bridge)/config/bridge_config.yaml" command="load"/>
+    </node>    
+
+    <!-- AMCL -->
+    <include file="$(find yahboomcar_nav)/launch/library/amcl.launch"/>
+    <!-- APP -->
+    <include file="$(find yahboomcar_nav)/launch/library/app.launch"/>
+    <!-- move_base -->
+    <include file="$(find yahboomcar_nav)/launch/library/move_base.launch"/>
+    <!-- RVIZ -->
+    <include file="$(find yahboomcar_nav)/launch/view/view_navigate.launch" if="$(arg use_rviz)"/>
+
+    
+    <!-- Map name  my_map-->
+    <arg name="map" default="grouproom_map"/>
+    <!-- MarkerArray node> -->
+    <node name='send_mark' pkg="yahboomcar_nav" type="send_mark.py"/>
+    <!-- Load map -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find yahboomcar_nav)/maps/$(arg map).yaml"/>
+   
+</launch>
