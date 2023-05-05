@@ -49,12 +49,18 @@ bridge:
   topic_from: ~/toVelRaw 
   topic_to: /vel_raw
 
-##################################################
-# Float data Communication
+
+  # TOPIC: /voltage - TYPE: geometry_msgs/Twist 
 - factory: mqtt_bridge.bridge:RosToMqttBridge
   msg_type: std_msgs.msg:Float32
   topic_from: /voltage
   topic_to: ~/voltageToMqtt
+- factory: mqtt_bridge.bridge:MqttToRosBridge
+  msg_type: std_msgs.msg:Float32
+  topic_from: /voltageFromMqtt  
+  topic_to: /voltage
+
+##################################################
 
 # Bool Data Communication
 - factory: mqtt_bridge.bridge:RosToMqttBridge
