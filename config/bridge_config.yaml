@@ -57,8 +57,18 @@ bridge:
   topic_to: ~/voltageToMqtt
 - factory: mqtt_bridge.bridge:MqttToRosBridge
   msg_type: std_msgs.msg:Float32
-  topic_from: /voltageFromMqtt  
+  topic_from: ~/voltageFromMqtt  
   topic_to: /voltage
+
+  # TOPIC: /move_base/status - TYPE: actionlib_msgs/GoalStatusArray
+- factory: mqtt_bridge.bridge:RosToMqttBridge
+  msg_type: actionlib_msgs/GoalStatusArray
+  topic_from: /move_base/status
+  topic_to: ~/fromStatus
+- factory: mqtt_bridge.bridge:MqttToRosBridge
+  msg_type: actionlib_msgs/GoalStatusArray
+  topic_from: ~/toStatus  
+  topic_to: /move_base/status
 
 ##################################################
 
