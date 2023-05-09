@@ -50,7 +50,7 @@ bridge:
   topic_to: /vel_raw
 
 
-  # TOPIC: /voltage - TYPE: geometry_msgs/Twist 
+  # TOPIC: /voltage - TYPE: std_msgs/Float32 
 - factory: mqtt_bridge.bridge:RosToMqttBridge
   msg_type: std_msgs.msg:Float32
   topic_from: /voltage
